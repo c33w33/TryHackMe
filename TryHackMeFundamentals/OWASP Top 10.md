@@ -30,44 +30,48 @@ OWASP Top 10
 1. What strange text file is in the website root directory?
 - type `ls`  to list files.
 - only 1 text file listed
-![owasp top 10 flag1.png](./_resources/99cb93e6984b46499fe105c9cb01899e.png)
+![owasp top 10 flag1.png](../../../_resources/99cb93e6984b46499fe105c9cb01899e.png)
 
 2. How many non-root/non-service/non-daemon users are there?
 - the `login.defs` defines the default minimum and maximum uid numbers assigned to users if they are not selected manually for them.
 - we grep for the `UID_MIN` and `UID_MAX` values
 ```grep -E '^UID_MIN|^UID_MAX' /etc/login.defs```
-![owasp top 10 flag2-1.png](./_resources/e9b44ca86d424f429f8123362aeb1d22.png)
+![owasp top 10 flag2-1.png](../../../_resources/e9b44ca86d424f429f8123362aeb1d22.png)
 - we can run `getent` to check for the users with uids between these values.
 ``` getent passwd {1000,6000} ```
 - the command did not output anything so the answer is 0.
 - you can also manually check `/etc/passwd` for a user that sticks out. it may be harder to do if we have more users.
-![owasp top 10 flag2-2.png](./_resources/18f8c50191ac4f83af268db44cc4d9c4.png)
+![owasp top 10 flag2-2.png](../../../_resources/18f8c50191ac4f83af268db44cc4d9c4.png)
 
 3. What user is this app running as?
 - run `whoami` command
-![owasp top 10 flag3.png](./_resources/944a15d3194342c190e379ea833a042b.png)
+![owasp top 10 flag3.png](../../../_resources/944a15d3194342c190e379ea833a042b.png)
 
 4. What is the user's shell set as?
 - read user's entry in /etc/passwd
 ```grep 'www-data' /etc/passwd```
-![owasp top 10 flag4.png](./_resources/2980a240c409460e8973f2e94d09dd50.png)
+![owasp top 10 flag4.png](../../../_resources/2980a240c409460e8973f2e94d09dd50.png)
 
 5. What version of Ubuntu is running?
 - run the following command:
+
 ``` lsb_release -a ```
-![owasp top10 flag5-1.png](./_resources/2e86cbc487784cf8bd4d318073f7474a.png)
+![owasp top10 flag5-1.png](../../../_resources/2e86cbc487784cf8bd4d318073f7474a.png)
+
 - info can also be found in /etc/lsb-release and /etc/issue
+
 ``` cat /etc/lsb-release ```
-![owasp top 10 flag5-2.png](./_resources/a1379f58069849afb458de5e50c63cb1.png)
+![owasp top 10 flag5-2.png](../../../_resources/a1379f58069849afb458de5e50c63cb1.png)
+
 ``` cat /etc/issue ```
-![owasp top 10 flag5-3.png](./_resources/2905fe24c9c8412e96f4b14fd9b9505a.png)
+![owasp top 10 flag5-3.png](../../../_resources/2905fe24c9c8412e96f4b14fd9b9505a.png)
 
 6. Print out the MOTD.  What favorite beverage is shown?
 - motd is stored in /etc/update-motd.d/00-header
 - if you google around there are different versions of linux that have different locations for motd. better locate/find motd first to make sure. 
 - at the bottom you'll see DR. PEPPER being mentioned.
 ``` cat /etc/update-motd.d/00-header ```
-![owasp top 10 flag6.png](./_resources/91541afea7a4409d9a89d3f109b1aa20.png)
+![owasp top 10 flag6.png](../../../_resources/91541afea7a4409d9a89d3f109b1aa20.png)
 
 # Task 6 [Severity 2] Broken Authentication
 - authentication and session management verifies users before giving them access to web applications. broken authentication would therefore allow access for attackers.
@@ -89,13 +93,13 @@ OWASP Top 10
 - register as 'darren'. you'll find that he is already registered.
 - register as ' darren'. you'll login into darren's account.
 7. What is the flag that you found in darren's account?
-![owasp top 10 flag7.png](./_resources/c799c699648c40ed8dbdbd02913ad71c.png)
+![owasp top 10 flag7.png](../../../_resources/c799c699648c40ed8dbdbd02913ad71c.png)
 
 8. Now try to do the same trick and see if you can login as arthur.
-![owasp top 10 flag8.png](./_resources/10f84f09bbc5408bbb98e4875ec1e12f.png)
+![owasp top 10 flag8.png](../../../_resources/10f84f09bbc5408bbb98e4875ec1e12f.png)
 
 9. What is the flag that you found in arthur's account?
-![owasp top 10 flag9.png](./_resources/5450393527234e209805fd01cdbed727.png)
+![owasp top 10 flag9.png](../../../_resources/5450393527234e209805fd01cdbed727.png)
 
 # Task 8 [Severity 3] Sensitive Data Exposure (Introduction)
 - when a web app accidentally divulges sensitive info e.g. PII or credentials
@@ -127,13 +131,13 @@ OWASP Top 10
 ## Tasks
 10. What is the name of the mentioned directory?
 - visit the login page
-![owasp top 10 flag10-1.png](./_resources/b67f94f23bd54efd8b752a271f362ba3.png)
+![owasp top 10 flag10-1.png](../../../_resources/b67f94f23bd54efd8b752a271f362ba3.png)
 - inspect page source to view html and you'll see there is a comment: "Must remember to do something better than store it in /assets"
-![owasp top 10 flag10-2.png](./_resources/6d11cbe212884c5fb47aa0b9d220c760.png)
+![owasp top 10 flag10-2.png](../../../_resources/6d11cbe212884c5fb47aa0b9d220c760.png)
 11. Navigate to the directory you found in question one. What file stands out as being likely to contain sensitive data?
 - append the directory in the address bar
 - we see a database file 'webapp.db'
-![owasp top 10 flag11.png](./_resources/7ec73c08509e48e8b1123be8d83c635a.png)
+![owasp top 10 flag11.png](../../../_resources/7ec73c08509e48e8b1123be8d83c635a.png)
 12. Use the supporting material to access the sensitive data. What is the password hash of the admin user?
 - download the database by clicking it
 - go to your terminal to access it
@@ -142,15 +146,15 @@ OWASP Top 10
 - there are 3 users listed: admin, Bob and Alice.
 - password hash is the third column from the left.
 
-![owasp top 10 flag12.png](./_resources/120e3baa25164a358e6aa8dabdca0d12.png)
+![owasp top 10 flag12.png](../../../_resources/120e3baa25164a358e6aa8dabdca0d12.png)
 
 13. Crack the hash.
 	What is the admin's plaintext password?
 - using crackstation it is revealed that the password is 'qwertyuiop'
-![owasp top 10 flag13.png](./_resources/8370b4a401ba446a9b5cfb8677716211.png)
+![owasp top 10 flag13.png](../../../_resources/8370b4a401ba446a9b5cfb8677716211.png)
 14. Login as the admin. What is the flag?
 - go back to website and use credentials.
-![owasp top 10 flag14.png](./_resources/a823f0ffa34848e680652140d71c9d1c.png)
+![owasp top 10 flag14.png](../../../_resources/a823f0ffa34848e680652140d71c9d1c.png)
 
 # Task 12 [Severity 4] XML External Entity
 - XML External Entity (XXE) attack takes advantage of XML parsers/data to interact with backend/external systems
@@ -236,13 +240,13 @@ OWASP Top 10
 
 ## Tasks
 24. Try the payload mentioned in description on the website.
-![owasp top 10 flag24.png](./_resources/640be4afcf7d4689b1bd243df9e96509.png)
+![owasp top 10 flag24.png](../../../_resources/640be4afcf7d4689b1bd243df9e96509.png)
 
 
 # Task 16 [Severity 4] XML External Entity - Exploiting
 
 25. Try to display your own name using any payload.
-![owasp top 10 flag25.png](./_resources/7485ca0ec45a4bc392e2fb196f24a482.png)
+![owasp top 10 flag25.png](../../../_resources/7485ca0ec45a4bc392e2fb196f24a482.png)
 
 26. See if you can read the /etc/passwd.
 ```
@@ -251,7 +255,7 @@ OWASP Top 10
 &read;
  </root>
 ```
-![owasp top 10 flag26.png](./_resources/f92eb56f8bf2483ea736d6eeba0df81b.png)
+![owasp top 10 flag26.png](../../../_resources/f92eb56f8bf2483ea736d6eeba0df81b.png)
 
 
 27. What is the name of the user in /etc/passwd
@@ -271,7 +275,7 @@ OWASP Top 10
 &read;
  </root>>
 ```
-![owasp top 10 flag29.png](./_resources/8cdfe8cb85ff4629a2e3929ba58987a1.png)
+![owasp top 10 flag29.png](../../../_resources/8cdfe8cb85ff4629a2e3929ba58987a1.png)
 
 `MIIEogIBAAKCAQEA7b`
 
@@ -295,11 +299,11 @@ OWASP Top 10
 31. Deploy the machine and go to machine ip - Login with the username being noot and the password test1234.
 - okay
 - it leads to page with note=1
-![owasp top 10 flag31.PNG](./_resources/a09ffa8f304d41829d2dfd8089be8141.PNG)
+![owasp top 10 flag31.PNG](../../../_resources/a09ffa8f304d41829d2dfd8089be8141.PNG)
 
 32. Look at other users notes. What is the flag?
 -try note=0.
-![owasp top 10 flag32.PNG](./_resources/8dbc9657a5b24cae975b842247c6c153.PNG)
+![owasp top 10 flag32.PNG](../../../_resources/8dbc9657a5b24cae975b842247c6c153.PNG)
 
 # Task 19 [Severity 6] Security Misconfiguration
 
@@ -322,9 +326,9 @@ OWASP Top 10
 - using the default credentials, we login into the app and find the flag.
 
 
-![owasp top 10 flag34-2.PNG](./_resources/52a1550a3980487892687cd59602f890.PNG)
+![owasp top 10 flag34-2.PNG](../../../_resources/52a1550a3980487892687cd59602f890.PNG)
 
-![owasp top 10 flag34-1.PNG](./_resources/3aa32984162048c59cf36b1a0de1eaa9.PNG)
+![owasp top 10 flag34-1.PNG](../../../_resources/3aa32984162048c59cf36b1a0de1eaa9.PNG)
 
 # Task 20 [Severity 7] Cross-site Scripting
 - A type of injection where malicious scripts are executed in the victim's machine
@@ -345,7 +349,7 @@ OWASP Top 10
 	<script> alert("Hello")
 	</script>
 	```
-	![7787dcb8df22548ca8228cdd7c3c01f4.png](./_resources/b005aac9a9524ea1a16ab0fc2f833744.png)
+	![7787dcb8df22548ca8228cdd7c3c01f4.png](../../../_resources/b005aac9a9524ea1a16ab0fc2f833744.png)
 
 35. On the same reflective page, craft a reflected XSS payload that will cause a popup with your machines IP address.
 	- put popup alert script as payload and flag will appear. use window.location.hostname
@@ -356,21 +360,21 @@ OWASP Top 10
 
 36. Now navigate to ip in your browser and click on the "Stored XSS" tab on the navbar; make an account. Then add a comment and see if you can insert some of your own HTML.
 	- created user1 and commented hello with html bold tags
-![5f807eea723ea14cd6dd4cab8451bfa8.png](./_resources/e540d230b9f841d2b4119d845bba7368.png)
-![fbe06668aa22788be495c4e85cc907e4.png](./_resources/c17893e3945f4f1182ddcb31131e4f2a.png)
+![5f807eea723ea14cd6dd4cab8451bfa8.png](../../../_resources/e540d230b9f841d2b4119d845bba7368.png)
+![fbe06668aa22788be495c4e85cc907e4.png](../../../_resources/c17893e3945f4f1182ddcb31131e4f2a.png)
 
 
 37. On the same page, create an alert popup box appear on the page with your document cookies.
 
-![798eaafe6995fcfe778af3b3c3d58566.png](./_resources/9b1702346e5c4ee6963f8795a9ff97c2.png)
-![896ddbfa60b7da144215359038e0fe9a.png](./_resources/752b15c8d19e4e3a8d8b72345cdacf57.png)
-![c5b7d13385f21e68a04248d149cc761c.png](./_resources/49c9a35feb4a4defa9e6897131f2154f.png)
+![798eaafe6995fcfe778af3b3c3d58566.png](../../../_resources/9b1702346e5c4ee6963f8795a9ff97c2.png)
+![896ddbfa60b7da144215359038e0fe9a.png](../../../_resources/752b15c8d19e4e3a8d8b72345cdacf57.png)
+![c5b7d13385f21e68a04248d149cc761c.png](../../../_resources/49c9a35feb4a4defa9e6897131f2154f.png)
 
 38. Change "XSS Playground" to "I am a hacker" by adding a comment and using Javascript. 
 ```
 <script>document.querySelector('#thm-title').textContent = 'I am a hacker'</script>
 ```
-![d859e21ae8a6752368f704c7ec96486e.png](./_resources/87ee0eeebf3046a5959737dce9cee493.png)
+![d859e21ae8a6752368f704c7ec96486e.png](../../../_resources/87ee0eeebf3046a5959737dce9cee493.png)
 
 # Task 21 [Severity 8] Insecure Deserialization
 
@@ -442,12 +446,12 @@ B) A Behaviour
 43. 1st flag (cookie value)
 - cookie value is in base 64 
 - decode to get flag
-![2962f72bc322b0332767129df1cd5d88.png](./_resources/23362612b4d74a46b520e7ec5109b4aa.png)
+![2962f72bc322b0332767129df1cd5d88.png](../../../_resources/23362612b4d74a46b520e7ec5109b4aa.png)
 
 
 44. 2nd flag (admin dashboard)
 - change userType in Storage to admin and go to page admin.
-![f1d04186696c962d2029cfb81ae92506.png](./_resources/8c0fa4604b6d48eaa8da3dd229a2984e.png)
+![f1d04186696c962d2029cfb81ae92506.png](../../../_resources/8c0fa4604b6d48eaa8da3dd229a2984e.png)
 
 # Task 26 [Severity 8] Insecure Deserialization - Code Execution
 
@@ -471,7 +475,7 @@ print(base64.b64encode(pickle.dumps(rce())))
 - run nc -lvnp 4444
 - replace cookie encodedpayload
 - get reverse shell and navigate to home directory to get flag
-![ca70aa61b1de7c4b20572f1304dba769.png](./_resources/5ff37da3eda04b15bb1c79d295a74120.png)
+![ca70aa61b1de7c4b20572f1304dba769.png](../../../_resources/5ff37da3eda04b15bb1c79d295a74120.png)
 
 
 # Task 27 [Severity 9] Components With Known Vulnerabilities - Intro
@@ -487,9 +491,9 @@ print(base64.b64encode(pickle.dumps(rce())))
 
 # Task 29  [Severity 9] Components With Known Vulnerabilities - Lab
 - website is CSE Bookstore
-![5425bbbf7eb3e87b43593f75e3b414a6.png](./_resources/4740086e0ab5429fb286b765f4f61bc8.png)
+![5425bbbf7eb3e87b43593f75e3b414a6.png](../../../_resources/4740086e0ab5429fb286b765f4f61bc8.png)
 - keyword 'book' platform 'php verified
-![190a093bc56ed21b18892c7dc2a9b28d.png](./_resources/f6787f54cee24c43b04ebf452698338c.png)
+![190a093bc56ed21b18892c7dc2a9b28d.png](../../../_resources/f6787f54cee24c43b04ebf452698338c.png)
 - we use first script 
 
 ## Tasks
@@ -497,7 +501,7 @@ print(base64.b64encode(pickle.dumps(rce())))
 
 - we run the script and payload is generated
 through a link which will launch a shell
-![a6f6b35a1de93b5425e56b96468619e1.png](./_resources/f4832c430c814df0a85463200432ed68.png)
+![a6f6b35a1de93b5425e56b96468619e1.png](../../../_resources/f4832c430c814df0a85463200432ed68.png)
 
 
 # Task 30  [Severity 10] Insufficient Logging and Monitoring
